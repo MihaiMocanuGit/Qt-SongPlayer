@@ -1,3 +1,0 @@
-/home/mihai/Sources/MihaiMocanuFmi/ProjectOop/cmake-build-debug/CMakeFiles/ProjectOop.dir
-/home/mihai/Sources/MihaiMocanuFmi/ProjectOop/cmake-build-debug/CMakeFiles/edit_cache.dir
-/home/mihai/Sources/MihaiMocanuFmi/ProjectOop/cmake-build-debug/CMakeFiles/rebuild_cache.dir
