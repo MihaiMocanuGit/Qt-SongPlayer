@@ -10,4 +10,4 @@ add_subdirectory(Tests)
 
 add_executable(${PROJECT_NAME} main.cpp)
 
-target_link_libraries(${PROJECT_NAME} Libs)
+target_link_libraries(${PROJECT_NAME} PRIVATE Libs)
