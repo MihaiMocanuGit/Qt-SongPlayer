@@ -4,8 +4,8 @@
 #include <algorithm>
 #include <utility>
 
-Song::Song(std::string artist, std::string title, const std::string &lyrics)
-        : m_artist{std::move(artist)}, m_title{std::move(title)}
+Song::Song(std::string artist, std::string title, std::string link, const std::string &lyrics)
+        : m_artist{std::move(artist)}, m_title{std::move(title)}, m_link{std::move(link)}
 {
     m_lyrics = std::vector<std::string>();
 
@@ -33,4 +33,9 @@ const std::string & Song::getTitle() const
 const std::vector<std::string> & Song::getLyrics() const
 {
     return m_lyrics;
+}
+
+const std::string &Song::getLink() const
+{
+    return m_link;
 }

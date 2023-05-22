@@ -43,10 +43,11 @@ Song FileRepository::m_getNextSong(std::ifstream &ref_inputFile)
     bool found1, found2, found3;
     std::string artist = m_findFirstVariable(ARTIST_VAR, ref_inputFile, found1);
     std::string title = m_findFirstVariable(TITLE_VAR, ref_inputFile, found2);
+    std::string link = m_findFirstVariable(LINK_VAR, ref_inputFile, found2);
     std::string lyrics = m_findFirstVariable(LYRICS_VAR, ref_inputFile, found3);
 
     if (found1 and found2 and found3)
-        return Song(artist, title, lyrics);
+        return Song(artist, title, link, lyrics);
     else
         throw std::runtime_error("Could not load song, check format in file!");
 
