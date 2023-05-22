@@ -29,4 +29,6 @@ public:
     void remove(const Song& song);
 
     const SongMap_t &getSongs() const;
+
+    std::vector<Song> getSongsVector() const;
 };

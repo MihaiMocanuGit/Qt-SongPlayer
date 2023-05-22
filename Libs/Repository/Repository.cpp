@@ -29,3 +29,12 @@ const Repository::SongMap_t &Repository::getSongs() const
 {
     return m_songs;
 }
+
+std::vector<Song> Repository::getSongsVector() const
+{
+    std::vector<Song> songs;
+    songs.reserve(m_songs.size());
+    for (const auto &[key, song] : m_songs)
+        songs.push_back(song);
+    return songs;
+}
