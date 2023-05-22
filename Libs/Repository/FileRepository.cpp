@@ -5,10 +5,10 @@
 ////////////////////////////////////////////PRIVATE/////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-std::string FileRepository::m_findFirstVariable(const std::string &variable, bool &outFound)
+std::string FileRepository::m_findFirstVariable(const std::string &variable, std::ifstream &ref_inputFile, bool &outFound)
 {
     std::string result;
-    while(std::getline(m_inputFile, result) and not result.starts_with(variable));
+    while(std::getline(ref_inputFile, result) and not result.starts_with(variable));
 
     outFound = result.length() >= variable.length();
 
@@ -19,7 +19,7 @@ std::string FileRepository::m_findFirstVariable(const std::string &variable, boo
 
         std::string line;
         //while the line does not end with _"_ right before the "Carriage Return" if it exists, we need to continue reading
-        while((result.at(result.length() - 2) != '"' and result.at(result.length() - 1) != '"') and std::getline(m_inputFile, line) )
+        while((result.at(result.length() - 2) != '"' and result.at(result.length() - 1) != '"') and std::getline(ref_inputFile, line) )
             result += ' ' + line;
 
         //we delete the \r = "Carriage Return" in this case if it exists at the end of the file and append a space
@@ -38,12 +38,12 @@ std::string FileRepository::m_findFirstVariable(const std::string &variable, boo
 
 
 
-Song FileRepository::m_getNextSong()
+Song FileRepository::m_getNextSong(std::ifstream &ref_inputFile)
 {
     bool found1, found2, found3;
-    std::string artist = m_findFirstVariable(ARTIST_VAR, found1);
-    std::string title = m_findFirstVariable(TITLE_VAR, found2);
-    std::string lyrics = m_findFirstVariable(LYRICS_VAR, found3);
+    std::string artist = m_findFirstVariable(ARTIST_VAR, ref_inputFile, found1);
+    std::string title = m_findFirstVariable(TITLE_VAR, ref_inputFile, found2);
+    std::string lyrics = m_findFirstVariable(LYRICS_VAR, ref_inputFile, found3);
 
     if (found1 and found2 and found3)
         return Song(artist, title, lyrics);
