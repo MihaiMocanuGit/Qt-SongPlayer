@@ -1,4 +1,5 @@
 #include <fstream>
+#include <iostream>
 #include "FileRepository.h"
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -65,6 +66,19 @@ void FileRepository::load(const std::string &filepath)
     if (inputFile.fail())
         throw std::runtime_error("Failed to open file!");
 
+    while (not inputFile.eof())
+    {
+        try
+        {
+            store(m_getNextSong(inputFile));
+        }
+        catch (std::exception &exp)
+        {
+            std::cerr << exp.what();
+            inputFile.close();
+        }
+
+    }
 
     inputFile.close();
 }
