@@ -71,5 +71,22 @@ void FileRepository::load(const std::string &filepath)
 
 void FileRepository::save(const std::string &filepath)
 {
+    std::ofstream outputFile;
+    outputFile.open(filepath);
+    if (outputFile.fail())
+        throw std::runtime_error("Failed to write to file!");
 
+    for (const auto &[key, song] : m_songs)
+    {
+        std::string artist = ARTIST_VAR + song.getArtist() + "\"\n";
+        std::string title = TITLE_VAR + song.getTitle() + "\"\n";
+        std::string link = LINK_VAR + song.getLink() + "\"\n";
+
+        outputFile << artist << title << link;
+        outputFile << LINK_VAR;
+        for (const auto &word : song.getLyrics())
+            outputFile << word << ' ';
+    }
+
+    outputFile.close();
 }
