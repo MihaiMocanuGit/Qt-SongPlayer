@@ -58,18 +58,18 @@ Song FileRepository::m_getNextSong(std::ifstream &ref_inputFile)
 ////////////////////////////////////////////PUBLIC//////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-FileRepository::FileRepository(std::string filepath) : m_filepath(std::move(filepath))
-{
-
-}
-
-void FileRepository::load()
+void FileRepository::load(const std::string &filepath)
 {
     std::ifstream inputFile;
-    inputFile.open(m_filepath);
+    inputFile.open(filepath);
     if (inputFile.fail())
         throw std::runtime_error("Failed to open file!");
 
 
     inputFile.close();
+}
+
+void FileRepository::save(const std::string &filepath)
+{
+
 }
