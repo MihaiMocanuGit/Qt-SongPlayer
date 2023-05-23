@@ -4,9 +4,9 @@
 class Playlist : public Repository
 {
 private:
-    int m_generateRandomNumber(int low, int high);
+    static int m_generateRandomNumber(int low, int high);
 
-    std::vector<int> m_randomIndexes(int noElements);
+    static std::vector<int> m_randomIndexes(int noElements);
 public:
     Playlist() = default;
 
