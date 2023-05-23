@@ -17,7 +17,7 @@ void SongController::addSong(const std::string &title, const std::string &artist
     }
 }
 
-const Song &SongController::findSong(const std::string &title, const std::string &artist)
+const Song &SongController::findSong(const std::string &title, const std::string &artist) const
 {
     try
     {
@@ -30,7 +30,7 @@ const Song &SongController::findSong(const std::string &title, const std::string
     }
 }
 
-std::vector<Song> SongController::getSongsSortedByTitle(bool decreasing)
+std::vector<Song> SongController::getSongsSortedByTitle(bool decreasing) const
 {
     std::vector<Song> songs = m_ref_repository.getSongsVector();
 
@@ -41,7 +41,7 @@ std::vector<Song> SongController::getSongsSortedByTitle(bool decreasing)
     return songs;
 }
 
-std::vector<Song> SongController::getSongsSortedByArtist(bool decreasing)
+std::vector<Song> SongController::getSongsSortedByArtist(bool decreasing) const
 {
     std::vector<Song> songs = m_ref_repository.getSongsVector();
 

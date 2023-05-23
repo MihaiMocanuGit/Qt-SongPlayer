@@ -33,4 +33,6 @@ public:
     const SongMap_t &getSongs() const;
 
     std::vector<Song> getSongsVector() const;
+
+    static std::pair<std::string, std::string> getKey(const Song &song);
 };

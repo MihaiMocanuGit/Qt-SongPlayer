@@ -38,3 +38,9 @@ std::vector<Song> Repository::getSongsVector() const
         songs.push_back(song);
     return songs;
 }
+
+std::pair<std::string, std::string> Repository::getKey(const Song &song)
+{
+    return std::make_pair(song.getTitle(), song.getArtist());
+}
+

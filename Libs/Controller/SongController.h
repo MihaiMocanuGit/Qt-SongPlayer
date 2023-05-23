@@ -12,8 +12,8 @@ public:
     void addSong(const std::string &title, const std::string &artist, const std::string &link = "",
                  const std::string& lyrics = "");
 
-    const Song &findSong(const std::string &title, const std::string &artist);
+    const Song &findSong(const std::string &title, const std::string &artist) const;
 
-    std::vector<Song> getSongsSortedByTitle(bool decreasing = false);
-    std::vector<Song> getSongsSortedByArtist(bool decreasing = false);
+    std::vector<Song> getSongsSortedByTitle(bool decreasing = false) const;
+    std::vector<Song> getSongsSortedByArtist(bool decreasing = false) const;
 };
