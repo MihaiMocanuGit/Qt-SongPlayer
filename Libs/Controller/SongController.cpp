@@ -59,3 +59,27 @@ std::vector<Song> SongController::getSongsSortedByArtist(bool decreasing) const
     return songs;
 }
 
+void SongController::undo()
+{
+    if (not m_undoStack.empty())
+    {
+        auto actionUniqPtr = std::move(m_undoStack.top());
+        m_undoStack.pop();
+        m_redoStack.push(std::move(actionUniqPtr));
+
+        m_redoStack.top()->apply();
+    }
+}
+
+void SongController::redo()
+{
+    if (not m_redoStack.empty())
+    {
+        auto actionUniqPtr = std::move(m_redoStack.top());
+        m_redoStack.pop();
+        m_undoStack.push(std::move(actionUniqPtr));
+
+        m_undoStack.top()->apply();
+    }
+}
+
