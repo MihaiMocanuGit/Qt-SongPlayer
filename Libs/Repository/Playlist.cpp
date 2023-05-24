@@ -11,21 +11,22 @@ int Playlist::m_generateRandomNumber(int low, int high)
 
     return distr(gen); // generate numbers
 }
-std::vector<int> Playlist::m_randomIndexes(int noElements)
+std::vector<int> Playlist::m_randomIndexes(int totalNoElements, int wantedNoElements)
 {
     std::vector<int> indexes;
-    indexes.reserve(noElements);
+    indexes.reserve(wantedNoElements);
+    float sequenceSize = (float)totalNoElements/wantedNoElements;
 
-    int start = 0;
-    std::for_each(indexes.begin(), indexes.end(), [&start](int &elem)->void {elem = start++;});
-
-    int noPermutations = m_generateRandomNumber(0, noElements);
-
-    while (noPermutations > 0)
+    for (int i = 0; i < wantedNoElements; ++i)
     {
-        std::prev_permutation(indexes.begin(), indexes.end());
-        noPermutations--;
+        int low = sequenceSize * i;
+        int high = sequenceSize *  (i+1) - 1;
+        int indexRandom = m_generateRandomNumber(low, high);
+
+        indexes.push_back(indexRandom);
     }
+
+
     return indexes;
 }
 
@@ -38,7 +39,7 @@ void Playlist::clear()
 void Playlist::generateRandom(const Repository::SongMap_t &songs, unsigned int size)
 {
 
-    std::vector<int> indexes = m_randomIndexes(songs.size());
+    std::vector<int> indexes = m_randomIndexes(songs.size(), size);
 
     for (unsigned int i = 0; i < size and i < songs.size(); i++)
     {
@@ -53,7 +54,7 @@ void Playlist::generateRandom(const Repository::SongMap_t &songs, unsigned int s
 
 void Playlist::generateRandom(const std::vector<Song> &songs, unsigned int size)
 {
-    std::vector<int> indexes = m_randomIndexes(songs.size());
+    std::vector<int> indexes = m_randomIndexes(songs.size(), size);
 
     for (unsigned int i = 0; i < size and i < songs.size(); i++)
     {

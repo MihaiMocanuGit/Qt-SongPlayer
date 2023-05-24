@@ -6,7 +6,7 @@ class Playlist : public Repository
 private:
     static int m_generateRandomNumber(int low, int high);
 
-    static std::vector<int> m_randomIndexes(int noElements);
+    static std::vector<int> m_randomIndexes(int totalNoElements, int wantedNoElements);
 public:
     Playlist() = default;
 

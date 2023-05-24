@@ -1,6 +1,13 @@
 #include "SongController.h"
 #include <algorithm>
 
+
+SongController::SongController(Repository &ref_repository) : m_ref_repository{ref_repository}
+{
+
+}
+
+
 void SongController::addSong(const std::string &title, const std::string &artist, const std::string &link,
                              const std::string &lyrics)
 {
@@ -51,3 +58,4 @@ std::vector<Song> SongController::getSongsSortedByArtist(bool decreasing) const
 
     return songs;
 }
+
