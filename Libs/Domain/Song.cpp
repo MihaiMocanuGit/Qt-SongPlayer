@@ -39,3 +39,8 @@ const std::string &Song::getLink() const
 {
     return m_link;
 }
+
+std::string Song::toString() const
+{
+    return m_artist + " - " + m_title;
+}

@@ -22,5 +22,6 @@ public:
     const std::string & getLink() const;
     const std::vector<std::string> & getLyrics() const;
 
+    std::string toString() const;
 
 };

@@ -3,10 +3,12 @@
 #include "Libs/Repository/Repository.h"
 #include "Libs/Repository/Playlist.h"
 #include "Libs/Controller/SongController.h"
+#include <QApplication>
+#include "Libs/Ui/MainWindow.h"
 
-
-int main()
+int main(int argc, char *argv[])
 {
+    /*
     Repository repo;
 
     SongController controller(repo);
@@ -15,7 +17,7 @@ int main()
 
     FileRepository fileRepository;
     fileRepository.load("songs.txt");
-
+pana
     SongController fileController(fileRepository);
 
     Playlist playlist;
@@ -25,7 +27,13 @@ int main()
 
     for (const auto &song : songs)
         std::cout << song.first.first << " -\t" << song.first.second << '\n';
+    */
 
+
+    QApplication a(argc, argv);
+    MainWindow w;
+    w.show();
+    return QApplication::exec();
 
     return 0;
 }
