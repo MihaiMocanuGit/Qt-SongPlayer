@@ -12,6 +12,7 @@
 #include <deque>
 
 #include "../Controller/SongController.h"
+#include "../Repository/Playlist.h"
 
 class MainWindow : public QMainWindow
 
@@ -23,8 +24,11 @@ public:
     ~MainWindow();
 
 private:
-    std::deque<Song> m_allSongs;
-    std::deque<Song> m_playlistSongs;
+    Repository m_allSongs;
+    SongController m_allSongsController;
+
+    Playlist m_playlist;
+    SongController m_playlistController;
     void setupUI();
 
     QWidget* m_centralWidget;
@@ -88,4 +92,6 @@ private:
     void m_filterButtonAction();
 
     void m_insertButtonAction();
+
+    static void m_refreshQListWidget(QListWidget* list);
 };

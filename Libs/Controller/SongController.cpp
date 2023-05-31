@@ -83,3 +83,17 @@ void SongController::redo()
     }
 }
 
+void SongController::removeSong(const Song& song)
+{
+    try
+    {
+        m_ref_repository.remove(song);
+    }
+    // I was forced to do this against my will, send help
+    catch (std::exception &err)
+    {
+        throw err;
+    }
+
+}
+

@@ -14,11 +14,12 @@ private:
     std::stack<std::unique_ptr<Action>> m_undoStack;
     std::stack<std::unique_ptr<Action>> m_redoStack;
 public:
-    SongController(Repository &ref_repository);
+    explicit SongController(Repository &ref_repository);
 
     void addSong(const std::string &title, const std::string &artist, const std::string &link = "",
                  const std::string& lyrics = "");
 
+    void removeSong(const Song& song);
     const Song &findSong(const std::string &title, const std::string &artist) const;
 
     std::vector<Song> getSongsSortedByTitle(bool decreasing = false) const;

@@ -3,7 +3,7 @@
 
 
 MainWindow::MainWindow(QWidget *parent)
-        : QMainWindow(parent)
+        : QMainWindow(parent), m_allSongsController{m_allSongs}, m_playlistController{m_playlist}
 {
     this->setupUI();
 }
@@ -51,70 +51,18 @@ void MainWindow::m_filterButtonAction()
 
 void MainWindow::m_addButtonAction()
 {
-    std::string title = m_leftLayout->m_titleText->text().toStdString();
-    std::string artist = m_leftLayout->m_artistText->text().toStdString();
-    std::string duration = m_leftLayout->m_durationText->text().toStdString();
-    std::string link = m_leftLayout->m_linkText->text().toStdString();
 
-    if (title.empty() or artist.empty() or duration.empty() or link.empty())
-    {
-        QMessageBox msgBox;
-        msgBox.setText("Can't have empty fields!");
-        msgBox.exec();
-        return;
-    }
-
-    Song song(title, artist, duration, link);
-    m_allSongs.push_back(song);
-
-    QList<QListWidgetItem *> elements = m_leftLayout->m_listSongs->findItems(song.toString().c_str(), Qt::MatchExactly);
-    if (elements.empty())
-    {
-        m_leftLayout->m_listSongs->insertItem(m_leftLayout->m_listSongs->count(), song.toString().c_str());
-    }
-    else
-    {
-        QMessageBox msgBox;
-        msgBox.setText("Song is already in list");
-        msgBox.exec();
-    }
-
+    m_refreshQListWidget(m_leftLayout->m_listSongs);
 }
 
 void MainWindow::m_deleteButtonAction()
 {
-    int songListRow = m_leftLayout->m_listSongs->currentRow();
-    QListWidgetItem *it = m_leftLayout->m_listSongs->takeItem(songListRow);
-    QList<QListWidgetItem *> elements = m_rightLayout->m_listPlaylist->findItems(it->text(), Qt::MatchExactly);
-    if (not elements.empty())
-    {
-        QListWidgetItem *it2 = elements.first();
-        int songPlaylistRow = m_rightLayout->m_listPlaylist->row(it2);
-        it2 = m_rightLayout->m_listPlaylist->takeItem(songPlaylistRow);
-        m_playlistSongs.erase(m_playlistSongs.begin() + songPlaylistRow);
-        delete it2;
-    }
-
-    m_allSongs.erase(m_allSongs.begin() + songListRow);
-    delete it;
 }
 
 void MainWindow::m_insertButtonAction()
 {
-    int songListRow = m_leftLayout->m_listSongs->currentRow();
-    QListWidgetItem *it = m_leftLayout->m_listSongs->item(songListRow);
-    QList<QListWidgetItem *> elements = m_rightLayout->m_listPlaylist->findItems(it->text(), Qt::MatchExactly);
-    if (elements.empty())
-    {
-        m_playlistSongs.push_back(m_allSongs[songListRow]);
-        m_rightLayout->m_listPlaylist->insertItem(m_rightLayout->m_listPlaylist->count(), it->text());
-    }
-    else
-    {
-        QMessageBox msgBox;
-        msgBox.setText("Song is already in playlist");
-        msgBox.exec();
-    }
+
+    m_refreshQListWidget(m_rightLayout->m_listPlaylist);
 }
 
 
