@@ -36,36 +36,6 @@ void MainWindow::setupUI()
 
 }
 
-void MainWindow::m_updateButtonAction()
-{
-    QMessageBox msgBox;
-    msgBox.setText("Not implemented yet\n(Very fancy box)");
-    msgBox.exec();
-}
-void MainWindow::m_filterButtonAction()
-{
-    QMessageBox msgBox;
-    msgBox.setText("Not implemented yet\n(Very fancy box)");
-    msgBox.exec();
-}
-
-void MainWindow::m_addButtonAction()
-{
-
-    m_refreshQListWidget(m_leftLayout->m_listSongs);
-}
-
-void MainWindow::m_deleteButtonAction()
-{
-}
-
-void MainWindow::m_insertButtonAction()
-{
-
-    m_refreshQListWidget(m_rightLayout->m_listPlaylist);
-}
-
-
 MainWindow::LeftLayout::LeftLayout(QHBoxLayout* parent)
 {
     m_mainLayout = new QVBoxLayout();
@@ -156,4 +126,46 @@ MainWindow::RightLayout::RightLayout(QHBoxLayout *parent)
     m_mainLayout->addLayout(m_buttonLayout);
 
     parent->addLayout(m_mainLayout);
+}
+
+
+void MainWindow::m_addButtonAction()
+{
+    QMessageBox msgBox;
+    msgBox.setText("Not implemented yet\n(Very fancy box)");
+    msgBox.exec();
+    m_refreshQListWidget(m_leftLayout->m_listSongs);
+}
+
+void MainWindow::m_deleteButtonAction()
+{
+    QMessageBox msgBox;
+    msgBox.setText("Not implemented yet\n(Very fancy box)");
+    msgBox.exec();
+}
+
+void MainWindow::m_updateButtonAction()
+{
+    QMessageBox msgBox;
+    msgBox.setText("Not implemented yet\n(Very fancy box)");
+    msgBox.exec();
+}
+void MainWindow::m_filterButtonAction()
+{
+    QMessageBox msgBox;
+    msgBox.setText("Not implemented yet\n(Very fancy box)");
+    msgBox.exec();
+}
+
+
+
+void MainWindow::m_insertButtonAction()
+{
+
+    m_refreshQListWidget(m_rightLayout->m_listPlaylist);
+}
+
+void MainWindow::m_refreshQListWidget(QListWidget *list)
+{
+
 }

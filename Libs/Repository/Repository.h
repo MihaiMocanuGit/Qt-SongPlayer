@@ -14,9 +14,9 @@ private:
         }
     };
 
+public: using SongMap_t = std::unordered_map<std::pair<std::string, std::string>, Song, pair_string_hash>;
 protected:
     //std::pair<Title, Artist>
-    using SongMap_t = std::unordered_map<std::pair<std::string, std::string>, Song, pair_string_hash>;
     SongMap_t m_songs;
 
 public:
