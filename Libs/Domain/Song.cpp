@@ -44,3 +44,8 @@ std::string Song::toString() const
 {
     return m_artist + " - " + m_title;
 }
+
+bool Song::operator==(const Song &right)
+{
+    return this->m_title == right.m_title and this->m_artist == right.m_artist;
+}

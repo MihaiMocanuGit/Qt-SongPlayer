@@ -24,4 +24,6 @@ public:
 
     std::string toString() const;
 
+    bool operator==(const Song& right);
+
 };
