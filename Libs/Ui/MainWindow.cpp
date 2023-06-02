@@ -41,6 +41,7 @@ void MainWindow::setupUI()
     connect(m_leftLayout->m_generateRandomPlaylist, &QPushButton::clicked, this, &MainWindow::m_randomPlaylistButtonAction);
 
     connect(m_middleLayout->m_insertButton, &QPushButton::clicked, this, &MainWindow::m_insertButtonAction);
+    connect(m_middleLayout->m_removeButton, &QPushButton::clicked, this, &MainWindow::m_removeButtonAction);
 
 }
 
@@ -230,6 +231,24 @@ void MainWindow::m_insertButtonAction()
     }
 
 }
+
+void MainWindow::m_removeButtonAction()
+{
+    int songListRow = m_rightLayout->m_listPlaylist->currentRow();
+
+    if (songListRow != -1)
+    {
+        QListWidgetItem *it = m_rightLayout->m_listPlaylist->takeItem(songListRow);
+        std::string songStr = it->text().toStdString();
+        std::vector<std::string> songAttributes = Song::getBackSongAttributes(songStr);
+
+        m_songController.removeFromPlaylist(m_songController.findSong(songAttributes[0], songAttributes[1]));
+
+
+        m_modifiedState();
+    }
+}
+
 void MainWindow::m_viewLyricsButtonAction()
 {
     int songListRow = m_leftLayout->m_listSongs->currentRow();
@@ -334,3 +353,4 @@ void MainWindow::m_modifiedState()
 {
     m_songController.clearRedoStack();
 }
+
