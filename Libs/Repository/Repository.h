@@ -23,7 +23,7 @@ public:
     Repository() = default;
 
     //disabling the copy of repo
-    Repository(const Repository& other) = delete;
+    Repository(const Repository& other) = default;
     Repository operator=(const Repository& right) = delete;
 
     void store(const Song& song);

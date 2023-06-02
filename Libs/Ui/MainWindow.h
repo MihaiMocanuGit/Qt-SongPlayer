@@ -20,7 +20,7 @@ class MainWindow : public QMainWindow
 Q_OBJECT
 
 public:
-    MainWindow(QWidget *parent = nullptr);
+    explicit MainWindow(QWidget *parent = nullptr, const Repository& songRepo = {});
     ~MainWindow();
 
 private:
@@ -66,6 +66,7 @@ private:
 
     void m_sortTitleButtonAction();
     void m_sortArtistButtonAction();
+    void m_randomPlaylistButtonAction();
 
 
     struct MiddleLayout

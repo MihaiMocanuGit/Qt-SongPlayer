@@ -1,12 +1,18 @@
 #include <QMessageBox>
+#include <QInputDialog>
+#include <QDir>
 #include "MainWindow.h"
 
 
-MainWindow::MainWindow(QWidget *parent)
-        : QMainWindow(parent), m_songController{m_allSongs}
+MainWindow::MainWindow(QWidget *parent, const Repository& songRepo)
+        : QMainWindow(parent), m_allSongs{songRepo}, m_songController{m_allSongs}
 {
     this->setupUI();
+
+    m_refreshQListWidget(m_leftLayout->m_listSongs, m_songController.getSongs());
+    m_refreshQListWidget(m_rightLayout->m_listPlaylist, m_songController.getPlaylistSongs());
 }
+
 
 MainWindow::~MainWindow()
 {
@@ -32,6 +38,7 @@ void MainWindow::setupUI()
     connect(m_leftLayout->m_viewLyrics, &QPushButton::clicked, this, &MainWindow::m_viewLyricsButtonAction);
     connect(m_leftLayout->m_sortByTitle, &QPushButton::clicked, this, &MainWindow::m_sortTitleButtonAction);
     connect(m_leftLayout->m_sortByArtist, &QPushButton::clicked, this, &MainWindow::m_sortArtistButtonAction);
+    connect(m_leftLayout->m_generateRandomPlaylist, &QPushButton::clicked, this, &MainWindow::m_randomPlaylistButtonAction);
 
     connect(m_middleLayout->m_insertButton, &QPushButton::clicked, this, &MainWindow::m_insertButtonAction);
 
@@ -265,5 +272,24 @@ void MainWindow::m_sortArtistButtonAction()
 
     for(const auto& song : m_songController.getPlaylistSortedByArtist())
         m_rightLayout->m_listPlaylist->addItem(song.toString().c_str());
+}
+
+void MainWindow::m_randomPlaylistButtonAction()
+{
+
+    bool ok;
+    int minValue = 0;
+    int maxValue = (int)m_songController.getSongs().size() - 1;
+
+
+
+
+    int option = QInputDialog::getInt(this, tr("Generate Random Playlist"), tr("How many songs:"),
+                                      0, minValue, maxValue, 1, &ok);
+    if (ok)
+    {
+        m_songController.generateRandomPlaylist(option);
+        m_refreshQListWidget(m_rightLayout->m_listPlaylist, m_songController.getPlaylistSongs());
+    }
 }
 
