@@ -5,9 +5,9 @@
 
 #include <memory>
 #include <stack>
-#include "Action.h"
-#include "ActionAdd.h"
-#include "ActionDelete.h"
+#include "../Domain/Action.h"
+#include "../Domain/ActionAdd.h"
+#include "../Domain/ActionDelete.h"
 
 class SongController
 {

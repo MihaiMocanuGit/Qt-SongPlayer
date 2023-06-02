@@ -14,9 +14,9 @@ find_package(Qt5 COMPONENTS
         REQUIRED)
 
 add_library(Libs
-        Controller/SongController.cpp Controller/SongController.h Controller/ActionDelete.cpp Controller/ActionDelete.h
-        Controller/Action.cpp Controller/Action.h Controller/Action.cpp Controller/Action.h Controller/ActionAdd.cpp
-        Controller/ActionAdd.h
+        Controller/SongController.cpp Controller/SongController.h Domain/ActionDelete.cpp Domain/ActionDelete.h
+        Domain/Action.cpp Domain/Action.h Domain/Action.cpp Domain/Action.h Domain/ActionAdd.cpp
+        Domain/ActionAdd.h
         Domain/Song.cpp Domain/Song.cpp Domain/SongException.cpp Domain/SongException.h
         Repository/Repository.cpp Repository/Repository.h Repository/FileRepository.cpp Repository/FileRepository.h
         Repository/Playlist.cpp Repository/Playlist.h
