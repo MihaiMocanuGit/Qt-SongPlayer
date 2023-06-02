@@ -35,7 +35,7 @@ void SongController::removeSong(const Song& song)
         try
         {
             m_playlist.remove(song);
-            m_undoStack.emplace(std::make_unique<ActionDelete>(m_ref_repository, song), m_undoId);
+            m_undoStack.emplace(std::make_unique<ActionDelete>(m_playlist, song), m_undoId);
         }
         catch (std::exception &err)
         {
@@ -72,7 +72,7 @@ void SongController::removeFromPlaylist(const Song &song)
         m_playlist.remove(song);
         m_undoStack.emplace(std::make_unique<ActionDelete>(m_playlist, song), m_undoId++);
     }
-        // I was forced to do this against my will, send help
+    // I was forced to do this against my will, send help
     catch (std::exception &err)
     {
         throw;
@@ -218,5 +218,10 @@ void SongController::redo()
             m_undoStack.top().first->applyRedo();
         }
     }
+}
+
+void SongController::clearRedoStack()
+{
+    std::stack<std::pair<std::unique_ptr<Action>, int>>().swap(m_redoStack);
 }
 

@@ -33,6 +33,8 @@ private:
 
     void setupUI();
 
+    void m_modifiedState();
+
     QWidget* m_centralWidget;
     QHBoxLayout* m_baseLayout;
     struct LeftLayout

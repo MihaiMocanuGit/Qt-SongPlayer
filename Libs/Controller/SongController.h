@@ -51,4 +51,6 @@ public:
     void undo();
     void redo();
 
+    void clearRedoStack();
+
 };

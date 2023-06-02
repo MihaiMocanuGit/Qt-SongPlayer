@@ -161,6 +161,7 @@ void MainWindow::m_addButtonAction()
     {
         m_songController.addSong(title, artist, link, lyrics);
         m_refreshQListWidget(m_leftLayout->m_listSongs, m_songController.getSongs());
+        m_modifiedState();
     }
     //song was already present in the songList
     catch (const std::exception &exc)
@@ -188,6 +189,8 @@ void MainWindow::m_deleteButtonAction()
         m_songController.removeSong(m_songController.findSong(songAttributes[0], songAttributes[1]));
 
         m_refreshQListWidget(m_rightLayout->m_listPlaylist, m_songController.getPlaylistSongs());
+
+        m_modifiedState();
     }
 
 }
@@ -211,10 +214,17 @@ void MainWindow::m_insertButtonAction()
         {
             m_songController.addToPlaylist(ref_song);
             m_refreshQListWidget(m_rightLayout->m_listPlaylist, m_songController.getPlaylistSongs());
+
+            m_modifiedState();
         }
         //the given song was already in the playlist
         catch (const std::exception& exception)
-        {}
+        {
+            QMessageBox msgBox;
+            msgBox.setText(exception.what());
+            msgBox.exec();
+            return;
+        }
 
 
     }
@@ -292,6 +302,8 @@ void MainWindow::m_randomPlaylistButtonAction()
         m_songController.clearPlaylist();
         m_songController.generateRandomPlaylist(option);
         m_refreshQListWidget(m_rightLayout->m_listPlaylist, m_songController.getPlaylistSongs());
+
+        m_modifiedState();
     }
 }
 
@@ -316,4 +328,9 @@ void MainWindow::keyPressEvent(QKeyEvent *e)
         }
 
     }
+}
+
+void MainWindow::m_modifiedState()
+{
+    m_songController.clearRedoStack();
 }
