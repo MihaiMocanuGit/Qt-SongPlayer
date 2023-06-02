@@ -15,7 +15,7 @@ private:
     std::vector<std::string> m_lyrics;
 
 public:
-    Song(std::string artist, std::string title, std::string link, const std::string &lyrics);
+    Song(std::string title, std::string artist, std::string link, const std::string &lyrics);
 
     const std::string & getArtist() const;
     const std::string & getTitle() const;
@@ -23,6 +23,7 @@ public:
     const std::vector<std::string> & getLyrics() const;
 
     std::string toString() const;
+    static std::vector<std::string> getBackSongAttributes(const std::string &songToString);
 
     bool operator==(const Song& right);
 

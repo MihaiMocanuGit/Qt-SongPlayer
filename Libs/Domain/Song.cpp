@@ -4,8 +4,8 @@
 #include <algorithm>
 #include <utility>
 
-Song::Song(std::string artist, std::string title, std::string link, const std::string &lyrics)
-        : m_artist{std::move(artist)}, m_title{std::move(title)}, m_link{std::move(link)}
+Song::Song(std::string title, std::string artist, std::string link, const std::string &lyrics)
+        :m_title{std::move(title)},  m_artist{std::move(artist)}, m_link{std::move(link)}
 {
     m_lyrics = std::vector<std::string>();
 
@@ -42,10 +42,22 @@ const std::string &Song::getLink() const
 
 std::string Song::toString() const
 {
-    return m_artist + " - " + m_title;
+    return m_title + " - " + m_artist;
 }
+
+std::vector<std::string> Song::getBackSongAttributes(const std::string &songToString)
+{
+    unsigned int delimiterPos = songToString.find('-');
+    std::string artist = songToString.substr(0, delimiterPos - 1);
+    std::string title = songToString.substr(delimiterPos+2, songToString.length());
+
+    std::vector<std::string> attributes = {artist, title, "", ""};
+    return attributes;
+}
+
 
 bool Song::operator==(const Song &right)
 {
     return this->m_title == right.m_title and this->m_artist == right.m_artist;
 }
+

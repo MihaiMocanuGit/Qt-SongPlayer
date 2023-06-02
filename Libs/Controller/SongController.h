@@ -40,6 +40,8 @@ public:
     std::vector<Song> getSongsSortedByTitle(bool decreasing = false) const;
     std::vector<Song> getSongsSortedByArtist(bool decreasing = false) const;
 
+    const Repository::SongMap_t &getSongs() const;
+    const Repository::SongMap_t &getPlaylistSongs() const;
     void undo();
     void redo();
 

@@ -175,3 +175,13 @@ void SongController::redo()
     }
 }
 
+const Repository::SongMap_t &SongController::getSongs() const
+{
+    return m_ref_repository.getSongs();
+}
+
+const Repository::SongMap_t &SongController::getPlaylistSongs() const
+{
+    return m_playlist.getSongs();
+}
+

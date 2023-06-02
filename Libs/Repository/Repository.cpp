@@ -4,7 +4,7 @@
 
 void Repository::store(const Song &song)
 {
-    auto [it, success] = m_songs.insert({std::make_pair(song.getTitle(), song.getArtist()), song});
+    auto [it, success] = m_songs.insert({getKey(song), song});
     if (not success)
         throw SongException("A song "  + song.getTitle() + " by " + song.getArtist() + " already exists");
 }
@@ -19,8 +19,8 @@ const Song &Repository::find(const std::string &title, const std::string &artist
 
 void Repository::remove(const Song &song)
 {
-    auto it = m_songs.erase({song.getTitle(), song.getArtist()});
-    if (it == 0)
+    unsigned int removedNoElements = m_songs.erase({song.getTitle(), song.getArtist()});
+    if (removedNoElements == 0)
         throw SongException("The song "  + song.getTitle() + " by " + song.getArtist() + " does not exist");
 
 }

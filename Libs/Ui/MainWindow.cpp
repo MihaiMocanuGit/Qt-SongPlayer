@@ -150,9 +150,9 @@ void MainWindow::m_addButtonAction()
     try
     {
         m_songController.addSong(title, artist, link, lyrics);
-        m_refreshQListWidget(m_leftLayout->m_listSongs);
+        m_refreshQListWidget(m_leftLayout->m_listSongs, m_songController.getSongs());
     }
-    //song was already present in the gsongList
+    //song was already present in the songList
     catch (const std::exception &exc)
     {
         QMessageBox msgBox;
@@ -167,23 +167,54 @@ void MainWindow::m_addButtonAction()
 void MainWindow::m_deleteButtonAction()
 {
     int songListRow = m_leftLayout->m_listSongs->currentRow();
-    QMessageBox msgBox;
-    msgBox.setText("Not implemented yet\n(Very fancy box)");
-    msgBox.exec();
+
+    //if no row is selected
+    if (songListRow != -1)
+    {
+        QListWidgetItem *it = m_leftLayout->m_listSongs->takeItem(songListRow);
+        std::string songStr = it->text().toStdString();
+        std::vector<std::string> songAttributes = Song::getBackSongAttributes(songStr);
+
+        m_songController.removeSong(m_songController.findSong(songAttributes[0], songAttributes[1]));
+
+        m_refreshQListWidget(m_rightLayout->m_listPlaylist, m_songController.getPlaylistSongs());
+    }
+
 }
 
 
 
 void MainWindow::m_insertButtonAction()
 {
+    int songListRow = m_leftLayout->m_listSongs->currentRow();
 
-    m_refreshQListWidget(m_rightLayout->m_listPlaylist);
+    //if no row is selected
+    if (songListRow != -1)
+    {
+        QListWidgetItem *it = m_leftLayout->m_listSongs->item(songListRow);
+        std::string songStr = it->text().toStdString();
+        std::vector<std::string> songAttributes = Song::getBackSongAttributes(songStr);
+
+        const Song &ref_song = m_songController.findSong(songAttributes[0], songAttributes[1]);
+
+        try
+        {
+            m_songController.addToPlaylist(ref_song);
+            m_refreshQListWidget(m_rightLayout->m_listPlaylist, m_songController.getPlaylistSongs());
+        }
+        //the given song was already in the playlist
+        catch (const std::exception& exception)
+        {}
+
+
+    }
+
 }
 
-void MainWindow::m_refreshQListWidget(QListWidget *list)
+void MainWindow::m_refreshQListWidget(QListWidget *list, const Repository::SongMap_t& songs)
 {
-    m_leftLayout->m_listSongs->clear();
+    list->clear();
 
-    for (const auto& songPair : m_allSongs.getSongs())
+    for (const auto& songPair : songs)
         list->addItem(songPair.second.toString().c_str());
 }

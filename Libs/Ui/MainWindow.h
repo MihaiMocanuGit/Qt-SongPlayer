@@ -93,5 +93,5 @@ private:
 
 
 
-    void m_refreshQListWidget(QListWidget* list);
+    void m_refreshQListWidget(QListWidget* list, const Repository::SongMap_t& songs);
 };
