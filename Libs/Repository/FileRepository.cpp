@@ -98,7 +98,7 @@ void FileRepository::save(const std::string &filepath)
 
         outputFile << artist << title << link;
         outputFile << LINK_VAR;
-        for (const auto &word : song.getLyrics())
+        for (const auto &word : song.getLyricsWords())
             outputFile << word << ' ';
     }
 

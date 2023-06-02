@@ -29,6 +29,7 @@ void MainWindow::setupUI()
 
     connect(m_leftLayout->m_delete, &QPushButton::clicked, this, &MainWindow::m_deleteButtonAction);
     connect(m_leftLayout->m_add, &QPushButton::clicked, this, &MainWindow::m_addButtonAction);
+    connect(m_leftLayout->m_viewLyrics, &QPushButton::clicked, this, &MainWindow::m_viewLyricsButtonAction);
 
     connect(m_middleLayout->m_insertButton, &QPushButton::clicked, this, &MainWindow::m_insertButtonAction);
 
@@ -210,6 +211,26 @@ void MainWindow::m_insertButtonAction()
     }
 
 }
+void MainWindow::m_viewLyricsButtonAction()
+{
+    int songListRow = m_leftLayout->m_listSongs->currentRow();
+
+    //if no row is selected
+    if (songListRow != -1)
+    {
+        QListWidgetItem *it = m_leftLayout->m_listSongs->item(songListRow);
+        std::string songStr = it->text().toStdString();
+        std::vector<std::string> songAttributes = Song::getBackSongAttributes(songStr);
+
+        const Song &ref_song = m_songController.findSong(songAttributes[0], songAttributes[1]);
+
+
+        QMessageBox msgBox;
+        msgBox.setText(ref_song.getLyrics().c_str());
+        msgBox.exec();
+        return;
+    }
+}
 
 void MainWindow::m_refreshQListWidget(QListWidget *list, const Repository::SongMap_t& songs)
 {
@@ -218,3 +239,4 @@ void MainWindow::m_refreshQListWidget(QListWidget *list, const Repository::SongM
     for (const auto& songPair : songs)
         list->addItem(songPair.second.toString().c_str());
 }
+

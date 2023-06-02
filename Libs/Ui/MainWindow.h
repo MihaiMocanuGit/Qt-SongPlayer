@@ -62,6 +62,7 @@ private:
     LeftLayout* m_leftLayout;
     void m_addButtonAction();
     void m_deleteButtonAction();
+    void m_viewLyricsButtonAction();
 
 
     struct MiddleLayout

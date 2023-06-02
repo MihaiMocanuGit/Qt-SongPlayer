@@ -5,9 +5,9 @@
 #include <utility>
 
 Song::Song(std::string title, std::string artist, std::string link, const std::string &lyrics)
-        :m_title{std::move(title)},  m_artist{std::move(artist)}, m_link{std::move(link)}
+        :m_title{std::move(title)},  m_artist{std::move(artist)}, m_link{std::move(link)}, m_originalLyrics{lyrics}
 {
-    m_lyrics = std::vector<std::string>();
+    m_lyricsWords = std::vector<std::string>();
 
     std::stringstream ss(lyrics);
     std::string word;
@@ -16,7 +16,7 @@ Song::Song(std::string title, std::string artist, std::string link, const std::s
         erase_if(word, [=](char ch)->bool{return not std::isalpha(ch);});
         std::for_each(word.begin(), word.end(), [=](char &ch){ch = tolower(ch);});
 
-        m_lyrics.push_back(word);
+        m_lyricsWords.push_back(word);
     }
 }
 
@@ -30,14 +30,18 @@ const std::string & Song::getTitle() const
     return m_title;
 }
 
-const std::vector<std::string> & Song::getLyrics() const
+const std::vector<std::string> & Song::getLyricsWords() const
 {
-    return m_lyrics;
+    return m_lyricsWords;
 }
 
 const std::string &Song::getLink() const
 {
     return m_link;
+}
+const std::string &Song::getLyrics() const
+{
+    return m_originalLyrics;
 }
 
 std::string Song::toString() const
@@ -60,4 +64,5 @@ bool Song::operator==(const Song &right)
 {
     return this->m_title == right.m_title and this->m_artist == right.m_artist;
 }
+
 
