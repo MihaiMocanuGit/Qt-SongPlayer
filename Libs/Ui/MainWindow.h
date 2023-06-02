@@ -25,10 +25,8 @@ public:
 
 private:
     Repository m_allSongs;
-    SongController m_allSongsController;
+    SongController m_songController;
 
-    Playlist m_playlist;
-    SongController m_playlistController;
     void setupUI();
 
     QWidget* m_centralWidget;
@@ -50,19 +48,21 @@ private:
         QLabel* m_artistLabel;
         QLineEdit* m_artistText;
 
-        QLabel* m_durationLabel;
-        QLineEdit* m_durationText;
+        QLabel* m_lyricsLabel;
+        QLineEdit* m_lyricsText;
 
         QLabel* m_linkLabel;
         QLineEdit* m_linkText;
 
-        QVBoxLayout* m_buttonLayout;
-        QHBoxLayout* m_firstRow;
-        QPushButton *m_add, *m_delete, *m_update;
-        QPushButton *m_filter;
+        QGridLayout* m_buttonGrid;
+        QPushButton *m_add, *m_delete, *m_viewLyrics;
+        QPushButton *m_sortByTitle, *m_sortByArtist, *m_generateRandomPlaylist;
 
     };
     LeftLayout* m_leftLayout;
+    void m_addButtonAction();
+    void m_deleteButtonAction();
+
 
     struct MiddleLayout
     {
@@ -70,8 +70,11 @@ private:
 
         QVBoxLayout* m_mainLayout;
         QPushButton* m_insertButton;
+        QPushButton* m_removeButton;
     };
     MiddleLayout* m_middleLayout;
+    void m_insertButtonAction();
+    void m_removeButtonAction();
 
     struct RightLayout
     {
@@ -86,12 +89,9 @@ private:
     };
     RightLayout* m_rightLayout;
 
-    void m_addButtonAction();
-    void m_deleteButtonAction();
-    void m_updateButtonAction();
-    void m_filterButtonAction();
 
-    void m_insertButtonAction();
 
-    static void m_refreshQListWidget(QListWidget* list);
+
+
+    void m_refreshQListWidget(QListWidget* list);
 };

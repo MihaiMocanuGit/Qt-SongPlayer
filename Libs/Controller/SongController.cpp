@@ -20,9 +20,9 @@ void SongController::addSong(const std::string &title, const std::string &artist
         m_undoStack.emplace(std::make_unique<ActionAdd>(m_ref_repository, song), m_undoId++);
     }
     // I was forced to do this against my will, send help
-    catch (std::exception &err)
+    catch (const std::exception &err)
     {
-        throw err;
+        throw;
     }
 }
 void SongController::removeSong(const Song& song)
@@ -30,12 +30,23 @@ void SongController::removeSong(const Song& song)
     try
     {
         m_ref_repository.remove(song);
-        m_undoStack.emplace(std::make_unique<ActionDelete>(m_ref_repository, song), m_undoId++);
+        m_undoStack.emplace(std::make_unique<ActionDelete>(m_ref_repository, song), m_undoId);
+
+        try
+        {
+            m_playlist.remove(song);
+            m_undoStack.emplace(std::make_unique<ActionDelete>(m_ref_repository, song), m_undoId);
+        }
+        catch (std::exception &err)
+        {
+            //song did not exist in playlist
+        }
+        m_undoId++;
     }
     // I was forced to do this against my will, send help
     catch (std::exception &err)
     {
-        throw err;
+        throw;
     }
 
 }
@@ -50,7 +61,7 @@ void SongController::addToPlaylist(const Song &song)
         // I was forced to do this against my will, send help
     catch (std::exception &err)
     {
-        throw err;
+        throw;
     }
 }
 
@@ -64,7 +75,7 @@ void SongController::removeFromPlaylist(const Song &song)
         // I was forced to do this against my will, send help
     catch (std::exception &err)
     {
-        throw err;
+        throw;
     }
 }
 
@@ -88,10 +99,10 @@ const Song &SongController::findSong(const std::string &title, const std::string
     {
         return m_ref_repository.find(title, artist);
     }
-        // I was forced to do this against my will, send help
+    // I was forced to do this against my will, send help
     catch (std::exception &err)
     {
-        throw err;
+        throw;
     }
 }
 
@@ -104,7 +115,7 @@ const Song &SongController::findSongInPlaylist(const std::string &title, const s
     // I was forced to do this against my will, send help
     catch (std::exception &err)
     {
-        throw err;
+        throw;
     }
 }
 
