@@ -46,6 +46,8 @@ public:
     const Repository::SongMap_t &getSongs() const;
     const Repository::SongMap_t &getPlaylistSongs() const;
 
+    void clearPlaylist();
+
     void undo();
     void redo();
 

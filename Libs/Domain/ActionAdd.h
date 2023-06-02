@@ -9,5 +9,6 @@ private:
 public:
     //inheriting the constructor of runtime_error
     using Action::Action;
-    void apply() override;
+    void applyUndo() override;
+    void applyRedo() override;
 };

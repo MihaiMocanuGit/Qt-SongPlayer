@@ -8,6 +8,7 @@
 #include <QFormLayout>
 #include <QPushButton>
 #include <QListWidget>
+#include <QKeyEvent>
 
 #include <deque>
 
@@ -22,6 +23,9 @@ Q_OBJECT
 public:
     explicit MainWindow(QWidget *parent = nullptr, const Repository& songRepo = {});
     ~MainWindow();
+protected:
+    void keyPressEvent(QKeyEvent *e) override;
+
 
 private:
     Repository m_allSongs;

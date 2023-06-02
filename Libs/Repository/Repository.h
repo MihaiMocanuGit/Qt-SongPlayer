@@ -21,6 +21,7 @@ protected:
 
 public:
     Repository() = default;
+    virtual ~Repository() = default;
 
     //disabling the copy of repo
     Repository(const Repository& other) = default;

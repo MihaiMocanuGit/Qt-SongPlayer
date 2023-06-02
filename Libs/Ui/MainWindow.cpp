@@ -279,17 +279,41 @@ void MainWindow::m_randomPlaylistButtonAction()
 
     bool ok;
     int minValue = 0;
-    int maxValue = (int)m_songController.getSongs().size() - 1;
+    static int option = 0;
+    int maxValue = (int)m_songController.getSongs().size();
 
 
 
 
-    int option = QInputDialog::getInt(this, tr("Generate Random Playlist"), tr("How many songs:"),
-                                      0, minValue, maxValue, 1, &ok);
+    option = QInputDialog::getInt(this, tr("Generate Random Playlist"), tr("How many songs:"),
+                                      option, minValue, maxValue, 1, &ok);
     if (ok)
     {
+        m_songController.clearPlaylist();
         m_songController.generateRandomPlaylist(option);
         m_refreshQListWidget(m_rightLayout->m_listPlaylist, m_songController.getPlaylistSongs());
     }
 }
 
+void MainWindow::keyPressEvent(QKeyEvent *e)
+{
+    if(e->type() == QKeyEvent::KeyPress)
+    {
+        if (e->matches(QKeySequence::Undo))
+        {
+            m_songController.undo();
+
+            m_refreshQListWidget(m_leftLayout->m_listSongs, m_songController.getSongs());
+            m_refreshQListWidget(m_rightLayout->m_listPlaylist, m_songController.getPlaylistSongs());
+        }
+        else if (e->matches(QKeySequence::Redo)
+                 or (e->key() == Qt::Key_Y && e->modifiers().testFlag(Qt::ControlModifier)))
+        {
+            m_songController.redo();
+
+            m_refreshQListWidget(m_leftLayout->m_listSongs, m_songController.getSongs());
+            m_refreshQListWidget(m_rightLayout->m_listPlaylist, m_songController.getPlaylistSongs());
+        }
+
+    }
+}

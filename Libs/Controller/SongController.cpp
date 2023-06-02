@@ -165,6 +165,27 @@ std::vector<Song> SongController::getPlaylistSortedByArtist(bool decreasing) con
     return songs;
 }
 
+const Repository::SongMap_t &SongController::getSongs() const
+{
+    return m_ref_repository.getSongs();
+}
+
+const Repository::SongMap_t &SongController::getPlaylistSongs() const
+{
+    return m_playlist.getSongs();
+}
+
+
+void SongController::clearPlaylist()
+{
+    while (not m_playlist.getSongs().empty())
+    {
+        Song songToRemove = m_playlist.getSongs().begin()->second;
+        m_playlist.remove(songToRemove);
+        m_undoStack.emplace(std::make_unique<ActionDelete>(m_playlist, songToRemove), m_undoId);
+    }
+    m_undoId++;
+}
 
 
 void SongController::undo()
@@ -172,13 +193,13 @@ void SongController::undo()
     if (not m_undoStack.empty())
     {
         unsigned int actionId = m_undoStack.top().second;
-        while(m_undoStack.top().second == actionId)
+        while (not m_undoStack.empty() and m_undoStack.top().second == actionId)
         {
             auto actionPair = std::move(m_undoStack.top());
             m_undoStack.pop();
             m_redoStack.push(std::move(actionPair));
 
-            m_redoStack.top().first->apply();
+            m_redoStack.top().first->applyUndo();
         }
     }
 }
@@ -188,24 +209,14 @@ void SongController::redo()
     if (not m_redoStack.empty())
     {
         unsigned int actionId = m_redoStack.top().second;
-        while(m_redoStack.top().second == actionId)
+        while (not m_redoStack.empty() and m_redoStack.top().second == actionId)
         {
             auto actionPair = std::move(m_redoStack.top());
             m_redoStack.pop();
             m_undoStack.push(std::move(actionPair));
 
-            m_undoStack.top().first->apply();
+            m_undoStack.top().first->applyRedo();
         }
     }
-}
-
-const Repository::SongMap_t &SongController::getSongs() const
-{
-    return m_ref_repository.getSongs();
-}
-
-const Repository::SongMap_t &SongController::getPlaylistSongs() const
-{
-    return m_playlist.getSongs();
 }
 

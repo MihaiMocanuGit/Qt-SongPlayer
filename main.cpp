@@ -30,7 +30,8 @@ pana
     */
 
     Repository repo;
-    for (int i = 0; i < 9; ++i)
+    /*
+    for (int i = 0; i < 14; ++i)
     {
         std::string title = "Title" + std::to_string(i);
         std::string artist = "Artist" + std::to_string(i);
@@ -71,6 +72,7 @@ pana
                                                                                         "Never gonna say goodbye\n"
                                                                                         "Never gonna tell a lie and hurt you" ));
 
+    */
     QApplication a(argc, argv);
     MainWindow w(nullptr, repo);
     w.show();

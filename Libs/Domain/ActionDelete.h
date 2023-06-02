@@ -8,5 +8,6 @@ private:
 
 public:
     using Action::Action;
-    void apply() override;
+    void applyUndo() override;
+    void applyRedo() override;
 };
