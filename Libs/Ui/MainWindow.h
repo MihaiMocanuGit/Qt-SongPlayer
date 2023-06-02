@@ -64,6 +64,9 @@ private:
     void m_deleteButtonAction();
     void m_viewLyricsButtonAction();
 
+    void m_sortTitleButtonAction();
+    void m_sortArtistButtonAction();
+
 
     struct MiddleLayout
     {

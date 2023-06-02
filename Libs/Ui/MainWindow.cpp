@@ -30,6 +30,8 @@ void MainWindow::setupUI()
     connect(m_leftLayout->m_delete, &QPushButton::clicked, this, &MainWindow::m_deleteButtonAction);
     connect(m_leftLayout->m_add, &QPushButton::clicked, this, &MainWindow::m_addButtonAction);
     connect(m_leftLayout->m_viewLyrics, &QPushButton::clicked, this, &MainWindow::m_viewLyricsButtonAction);
+    connect(m_leftLayout->m_sortByTitle, &QPushButton::clicked, this, &MainWindow::m_sortTitleButtonAction);
+    connect(m_leftLayout->m_sortByArtist, &QPushButton::clicked, this, &MainWindow::m_sortArtistButtonAction);
 
     connect(m_middleLayout->m_insertButton, &QPushButton::clicked, this, &MainWindow::m_insertButtonAction);
 
@@ -238,5 +240,30 @@ void MainWindow::m_refreshQListWidget(QListWidget *list, const Repository::SongM
 
     for (const auto& songPair : songs)
         list->addItem(songPair.second.toString().c_str());
+}
+
+void MainWindow::m_sortTitleButtonAction()
+{
+    m_leftLayout->m_listSongs->clear();
+    m_rightLayout->m_listPlaylist->clear();
+
+    for(const auto& song : m_songController.getSongsSortedByTitle())
+        m_leftLayout->m_listSongs->addItem(song.toString().c_str());
+
+    for(const auto& song : m_songController.getPlaylistSortedByTitle())
+        m_rightLayout->m_listPlaylist->addItem(song.toString().c_str());
+
+}
+
+void MainWindow::m_sortArtistButtonAction()
+{
+    m_leftLayout->m_listSongs->clear();
+    m_rightLayout->m_listPlaylist->clear();
+
+    for(const auto& song : m_songController.getSongsSortedByArtist())
+        m_leftLayout->m_listSongs->addItem(song.toString().c_str());
+
+    for(const auto& song : m_songController.getPlaylistSortedByArtist())
+        m_rightLayout->m_listPlaylist->addItem(song.toString().c_str());
 }
 

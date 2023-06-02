@@ -143,6 +143,30 @@ std::vector<Song> SongController::getSongsSortedByArtist(bool decreasing) const
     return songs;
 }
 
+std::vector<Song> SongController::getPlaylistSortedByTitle(bool decreasing) const
+{
+    std::vector<Song> songs = m_playlist.getSongsVector();
+
+    std::sort(songs.begin(), songs.end(), [=](const Song& elem1, const Song& elem2)->bool{
+        return (elem1.getTitle().compare(elem2.getTitle()) <= 0) != (decreasing);
+    });
+
+    return songs;
+}
+
+std::vector<Song> SongController::getPlaylistSortedByArtist(bool decreasing) const
+{
+    std::vector<Song> songs = m_playlist.getSongsVector();
+
+    std::sort(songs.begin(), songs.end(), [=](const Song& elem1, const Song& elem2)->bool{
+        return (elem1.getArtist().compare(elem2.getArtist()) <= 0) != (decreasing);
+    });
+
+    return songs;
+}
+
+
+
 void SongController::undo()
 {
     if (not m_undoStack.empty())
