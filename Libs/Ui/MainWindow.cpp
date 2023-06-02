@@ -152,6 +152,7 @@ void MainWindow::m_addButtonAction()
         m_songController.addSong(title, artist, link, lyrics);
         m_refreshQListWidget(m_leftLayout->m_listSongs);
     }
+    //song was already present in the gsongList
     catch (const std::exception &exc)
     {
         QMessageBox msgBox;
@@ -165,6 +166,7 @@ void MainWindow::m_addButtonAction()
 
 void MainWindow::m_deleteButtonAction()
 {
+    int songListRow = m_leftLayout->m_listSongs->currentRow();
     QMessageBox msgBox;
     msgBox.setText("Not implemented yet\n(Very fancy box)");
     msgBox.exec();
