@@ -7,10 +7,12 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
 
 
-find_package(Qt5 COMPONENTS
+find_package(Qt6 COMPONENTS
         Core
         Gui
         Widgets
+        Multimedia
+        MultimediaWidgets
         REQUIRED)
 
 add_library(Libs
@@ -23,7 +25,9 @@ add_library(Libs
         Ui/MainWindow.cpp Ui/MainWindow.h)
 
 target_link_libraries(Libs
-        Qt5::Core
-        Qt5::Gui
-        Qt5::Widgets
+        Qt6::Core
+        Qt6::Gui
+        Qt6::Widgets
+        Qt6::Multimedia
+        Qt6::MultimediaWidgets
         )

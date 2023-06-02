@@ -1,6 +1,7 @@
 #include <QMessageBox>
 #include <QInputDialog>
 #include <QDir>
+#include <QMediaPlayer>
 #include "MainWindow.h"
 
 
@@ -42,6 +43,8 @@ void MainWindow::setupUI()
 
     connect(m_middleLayout->m_insertButton, &QPushButton::clicked, this, &MainWindow::m_insertButtonAction);
     connect(m_middleLayout->m_removeButton, &QPushButton::clicked, this, &MainWindow::m_removeButtonAction);
+
+    connect(m_rightLayout->m_playButton, &QPushButton::clicked, this, &MainWindow::m_playButtonAction);
 
 }
 
@@ -132,10 +135,8 @@ MainWindow::RightLayout::RightLayout(QHBoxLayout *parent)
     m_buttonLayout = new QHBoxLayout();
 
     m_playButton = new QPushButton("Play");
-    m_nextButton = new QPushButton("Next");
 
     m_buttonLayout->addWidget(m_playButton);
-    m_buttonLayout->addWidget(m_nextButton);
 
     m_mainLayout->addLayout(m_buttonLayout);
 
@@ -352,5 +353,19 @@ void MainWindow::keyPressEvent(QKeyEvent *e)
 void MainWindow::m_modifiedState()
 {
     m_songController.clearRedoStack();
+}
+
+void MainWindow::m_playButtonAction()
+{
+    player = new QMediaPlayer;
+    audioOutput = new QAudioOutput;
+    player->setAudioOutput(audioOutput);
+    player->setSource(QUrl::fromLocalFile("never_gonna.mp4"));
+    videoWidget = new QVideoWidget;
+    player->setVideoOutput(videoWidget);
+    videoWidget->show();
+
+    audioOutput->setVolume(50);
+    player->play();
 }
 

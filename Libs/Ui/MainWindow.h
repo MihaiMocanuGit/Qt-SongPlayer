@@ -11,6 +11,9 @@
 #include <QKeyEvent>
 
 #include <deque>
+#include <QtMultimediaWidgets/QVideoWidget>
+#include <QMediaPlayer>
+#include <QAudioOutput>
 
 #include "../Controller/SongController.h"
 #include "../Repository/Playlist.h"
@@ -96,11 +99,13 @@ private:
         QListWidget* m_listPlaylist;
         QHBoxLayout* m_buttonLayout;
         QPushButton* m_playButton;
-        QPushButton* m_nextButton;
     };
     RightLayout* m_rightLayout;
 
-
+    QMediaPlayer* player;
+    QAudioOutput* audioOutput;
+    QVideoWidget* videoWidget;
+    void m_playButtonAction();
 
 
 
