@@ -48,7 +48,7 @@ Song FileRepository::m_getNextSong(std::ifstream &ref_inputFile)
     std::string lyrics = m_findFirstVariable(LYRICS_VAR, ref_inputFile, found4);
 
     if (found1 and found2 and found3 and found4)
-        return Song(artist, title, link, lyrics);
+        return Song(title, artist, link, lyrics);
     else
         throw std::runtime_error("Could not load song, check format in file!");
 
@@ -95,11 +95,9 @@ void FileRepository::save(const std::string &filepath)
         std::string artist = ARTIST_VAR + song.getArtist() + "\"\n";
         std::string title = TITLE_VAR + song.getTitle() + "\"\n";
         std::string link = LINK_VAR + song.getLink() + "\"\n";
+        std::string lyrics = LYRICS_VAR + song.getLyrics() + "\"\n";
 
-        outputFile << artist << title << link;
-        outputFile << LINK_VAR;
-        for (const auto &word : song.getLyricsWords())
-            outputFile << word << ' ';
+        outputFile << artist << title << link << lyrics;
     }
 
     outputFile.close();

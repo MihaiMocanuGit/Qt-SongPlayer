@@ -113,4 +113,5 @@ fabric.properties
 .idea/
 /cmake-build-debug/
 /build/ProjectOop
+/build/tests
 /build/never_gonna.mp4

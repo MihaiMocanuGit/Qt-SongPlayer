@@ -1,0 +1,8 @@
+ARTIST="Artist2"
+TITLE="Title2"
+LINK="Link2"
+LYRICS="LyricsLine1 LyricsLine2 "
+ARTIST="Artist1"
+TITLE="Title1"
+LINK="Link1"
+LYRICS="LyricsLine1 LyricsLine2 "
