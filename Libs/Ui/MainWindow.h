@@ -105,7 +105,7 @@ private:
 
     struct VideoPlayer
     {
-        VideoPlayer();
+        VideoPlayer(QObject *parent = nullptr);
 
         QMediaPlayer *m_player;
         QAudioOutput *m_audioOutput;

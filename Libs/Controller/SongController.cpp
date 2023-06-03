@@ -30,8 +30,7 @@ void SongController::removeSong(Song song)
     try
     {
         m_ref_repository.remove(song);
-        auto ptr = std::make_unique<ActionDelete>(m_ref_repository, song);
-        m_undoStack.push({std::move(ptr), m_undoId});
+        m_undoStack.emplace(std::make_unique<ActionDelete>(m_ref_repository, song), m_undoId);
 
         try
         {

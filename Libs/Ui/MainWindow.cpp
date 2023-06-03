@@ -35,7 +35,7 @@ void MainWindow::setupUI()
     m_leftLayout = new LeftLayout(m_baseLayout);
     m_middleLayout = new MiddleLayout(m_baseLayout);
     m_rightLayout = new RightLayout(m_baseLayout);
-    m_videoPlayer = new VideoPlayer;
+    m_videoPlayer = new VideoPlayer(this);
 
     this->setCentralWidget(m_centralWidget);
 
@@ -364,12 +364,11 @@ void MainWindow::m_modifiedState()
 }
 
 
-MainWindow::VideoPlayer::VideoPlayer()
+MainWindow::VideoPlayer::VideoPlayer(QObject *parent)
 {
-    m_player = new QMediaPlayer;
-    m_audioOutput = new QAudioOutput;
+    m_player = new QMediaPlayer(parent);
+    m_audioOutput = new QAudioOutput(parent);
     m_videoWidget = new QVideoWidget;
-
     m_videoWidget->setAttribute( Qt::WA_QuitOnClose, false);
 }
 
