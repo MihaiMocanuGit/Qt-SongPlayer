@@ -32,6 +32,8 @@ void MainWindow::setupUI()
     m_leftLayout = new LeftLayout(m_baseLayout);
     m_middleLayout = new MiddleLayout(m_baseLayout);
     m_rightLayout = new RightLayout(m_baseLayout);
+    m_videoPlayer = new VideoPlayer;
+
     this->setCentralWidget(m_centralWidget);
 
     connect(m_leftLayout->m_delete, &QPushButton::clicked, this, &MainWindow::m_deleteButtonAction);
@@ -355,17 +357,56 @@ void MainWindow::m_modifiedState()
     m_songController.clearRedoStack();
 }
 
+
+MainWindow::VideoPlayer::VideoPlayer()
+{
+    m_player = new QMediaPlayer;
+    m_audioOutput = new QAudioOutput;
+    m_videoWidget = new QVideoWidget;
+
+    m_videoWidget->setAttribute( Qt::WA_QuitOnClose, false );
+    m_audioOutput->setParent(m_player);
+}
+
+
+
 void MainWindow::m_playButtonAction()
 {
-    player = new QMediaPlayer;
-    audioOutput = new QAudioOutput;
-    player->setAudioOutput(audioOutput);
-    player->setSource(QUrl::fromLocalFile("never_gonna.mp4"));
-    videoWidget = new QVideoWidget;
-    player->setVideoOutput(videoWidget);
-    videoWidget->show();
+    int songListRow = m_rightLayout->m_listPlaylist->currentRow();
 
-    audioOutput->setVolume(50);
-    player->play();
+    //if no row is selected
+    if (songListRow != -1)
+    {
+        QListWidgetItem *it = m_rightLayout->m_listPlaylist->item(songListRow);
+        std::string songStr = it->text().toStdString();
+        std::vector<std::string> songAttributes = Song::getBackSongAttributes(songStr);
+
+        const Song &ref_song = m_songController.findSong(songAttributes[0], songAttributes[1]);
+
+        if (not ref_song.getLink().empty())
+        {
+            m_videoPlayer->m_player->setAudioOutput(m_videoPlayer->m_audioOutput);
+            m_videoPlayer->m_player->setSource(QUrl::fromLocalFile(ref_song.getLink().c_str()));
+            m_videoPlayer->m_player->setVideoOutput(m_videoPlayer->m_videoWidget);
+            m_videoPlayer->m_videoWidget->show();
+            m_videoPlayer->m_audioOutput->setVolume(50);
+
+            m_videoPlayer->m_player->play();
+        }
+        else
+        {
+            QMessageBox msgBox;
+            msgBox.setText("Song does not have a link");
+            msgBox.exec();
+        }
+
+    }
+}
+
+MainWindow::VideoPlayer::~VideoPlayer()
+{
+    delete m_player;
+    delete m_audioOutput;
+    delete m_videoWidget;
 }
 

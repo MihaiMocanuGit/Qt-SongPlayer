@@ -15,14 +15,14 @@ int main(int argc, char *argv[])
     {
         std::string title = "Title" + std::to_string(i);
         std::string artist = "Artist" + std::to_string(i);
-        std::string link = "Link" + std::to_string(i);
+        std::string link = "";
         std::string lyrics = "Lyrics" + std::to_string(i);
         Song song(title, artist, link, lyrics);
 
         repo.store(song);
     }
 
-    repo.store(Song("Never Gonna Give You Up ", "Rick Astley", "https://www.youtube.com/watch?v=dQw4w9WgXcQ", "We’re no strangers to love\n"
+    repo.store(Song("Never Gonna Give You Up ", "Rick Astley", "never_gonna.mp4", "We’re no strangers to love\n"
                                                                                         "You know the rules and so do I\n"
                                                                                         "A full commitment’s what I’m thinking of\n"
                                                                                         "You wouldn’t get this from any other guy\n"

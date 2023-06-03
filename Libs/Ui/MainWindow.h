@@ -102,9 +102,17 @@ private:
     };
     RightLayout* m_rightLayout;
 
-    QMediaPlayer* player;
-    QAudioOutput* audioOutput;
-    QVideoWidget* videoWidget;
+    struct VideoPlayer
+    {
+        VideoPlayer();
+
+        QMediaPlayer *m_player;
+        QAudioOutput *m_audioOutput;
+        QVideoWidget *m_videoWidget;
+
+        ~VideoPlayer();
+    };
+    VideoPlayer* m_videoPlayer;
     void m_playButtonAction();
 
 
