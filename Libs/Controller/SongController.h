@@ -28,7 +28,7 @@ public:
 
     void addSong(const std::string &title, const std::string &artist, const std::string &link = "",
                  const std::string& lyrics = "");
-    void removeSong(const Song& song);
+    void removeSong(Song song);
 
     void addToPlaylist(const Song& song);
     void removeFromPlaylist(const Song& song);

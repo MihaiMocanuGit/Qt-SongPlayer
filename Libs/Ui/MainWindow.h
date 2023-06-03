@@ -111,7 +111,6 @@ private:
         QAudioOutput *m_audioOutput;
         QVideoWidget *m_videoWidget;
 
-        ~VideoPlayer();
     };
     VideoPlayer* m_videoPlayer;
     void m_playButtonAction();

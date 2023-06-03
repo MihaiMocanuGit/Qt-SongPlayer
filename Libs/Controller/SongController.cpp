@@ -25,7 +25,7 @@ void SongController::addSong(const std::string &title, const std::string &artist
         throw;
     }
 }
-void SongController::removeSong(const Song& song)
+void SongController::removeSong(Song song)
 {
     try
     {

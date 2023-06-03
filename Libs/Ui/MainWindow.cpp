@@ -24,6 +24,7 @@ MainWindow::~MainWindow()
     delete m_leftLayout;
     delete m_middleLayout;
     delete m_rightLayout;
+    delete m_videoPlayer;
 }
 
 void MainWindow::setupUI()
@@ -414,12 +415,5 @@ void MainWindow::m_stopButtonAction()
 {
     m_videoPlayer->m_videoWidget->hide();
     m_videoPlayer->m_audioOutput->setMuted(true);
-}
-
-MainWindow::VideoPlayer::~VideoPlayer()
-{
-    delete m_player;
-    delete m_audioOutput;
-    delete m_videoWidget;
 }
 
