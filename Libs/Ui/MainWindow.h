@@ -99,6 +99,7 @@ private:
         QListWidget* m_listPlaylist;
         QHBoxLayout* m_buttonLayout;
         QPushButton* m_playButton;
+        QPushButton* m_stopButton;
     };
     RightLayout* m_rightLayout;
 
@@ -114,6 +115,7 @@ private:
     };
     VideoPlayer* m_videoPlayer;
     void m_playButtonAction();
+    void m_stopButtonAction();
 
 
 

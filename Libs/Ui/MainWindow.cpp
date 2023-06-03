@@ -6,9 +6,11 @@
 
 
 MainWindow::MainWindow(QWidget *parent, const Repository& songRepo)
-        : QMainWindow(parent), m_allSongs{songRepo}, m_songController{m_allSongs}
+        : QMainWindow(parent), m_allSongs{}, m_songController{m_allSongs}
 {
     this->setupUI();
+    for (const auto &[k, song] : songRepo.getSongs())
+        m_songController.addSong(song.getTitle(), song.getArtist(), song.getLink(), song.getLyrics());
 
     m_refreshQListWidget(m_leftLayout->m_listSongs, m_songController.getSongs());
     m_refreshQListWidget(m_rightLayout->m_listPlaylist, m_songController.getPlaylistSongs());
@@ -47,6 +49,7 @@ void MainWindow::setupUI()
     connect(m_middleLayout->m_removeButton, &QPushButton::clicked, this, &MainWindow::m_removeButtonAction);
 
     connect(m_rightLayout->m_playButton, &QPushButton::clicked, this, &MainWindow::m_playButtonAction);
+    connect(m_rightLayout->m_stopButton, &QPushButton::clicked, this, &MainWindow::m_stopButtonAction);
 
 }
 
@@ -137,8 +140,10 @@ MainWindow::RightLayout::RightLayout(QHBoxLayout *parent)
     m_buttonLayout = new QHBoxLayout();
 
     m_playButton = new QPushButton("Play");
+    m_stopButton = new QPushButton("Stop");
 
     m_buttonLayout->addWidget(m_playButton);
+    m_buttonLayout->addWidget(m_stopButton);
 
     m_mainLayout->addLayout(m_buttonLayout);
 
@@ -364,8 +369,7 @@ MainWindow::VideoPlayer::VideoPlayer()
     m_audioOutput = new QAudioOutput;
     m_videoWidget = new QVideoWidget;
 
-    m_videoWidget->setAttribute( Qt::WA_QuitOnClose, false );
-    connect(m_player, &QMediaPlayer::hasVideoChanged, m_audioOutput, [this](){m_audioOutput->setMuted(true);});
+    m_videoWidget->setAttribute( Qt::WA_QuitOnClose, false);
 }
 
 
@@ -388,7 +392,9 @@ void MainWindow::m_playButtonAction()
             m_videoPlayer->m_player->setSource(QUrl::fromLocalFile(ref_song.getLink().c_str()));
             m_videoPlayer->m_player->setVideoOutput(m_videoPlayer->m_videoWidget);
             m_videoPlayer->m_player->setAudioOutput(m_videoPlayer->m_audioOutput);
+            m_videoPlayer->m_videoWidget->setWindowTitle(ref_song.toString().c_str());
             m_videoPlayer->m_videoWidget->show();
+
 
             m_videoPlayer->m_player->play();
             m_videoPlayer->m_audioOutput->setMuted(false);
@@ -402,6 +408,12 @@ void MainWindow::m_playButtonAction()
         }
 
     }
+}
+
+void MainWindow::m_stopButtonAction()
+{
+    m_videoPlayer->m_videoWidget->hide();
+    m_videoPlayer->m_audioOutput->setMuted(true);
 }
 
 MainWindow::VideoPlayer::~VideoPlayer()
