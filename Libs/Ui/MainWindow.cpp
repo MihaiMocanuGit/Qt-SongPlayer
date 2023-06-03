@@ -365,7 +365,7 @@ MainWindow::VideoPlayer::VideoPlayer()
     m_videoWidget = new QVideoWidget;
 
     m_videoWidget->setAttribute( Qt::WA_QuitOnClose, false );
-    m_audioOutput->setParent(m_player);
+    connect(m_player, &QMediaPlayer::hasVideoChanged, m_audioOutput, [this](){m_audioOutput->setMuted(true);});
 }
 
 
@@ -385,13 +385,14 @@ void MainWindow::m_playButtonAction()
 
         if (not ref_song.getLink().empty())
         {
-            m_videoPlayer->m_player->setAudioOutput(m_videoPlayer->m_audioOutput);
             m_videoPlayer->m_player->setSource(QUrl::fromLocalFile(ref_song.getLink().c_str()));
             m_videoPlayer->m_player->setVideoOutput(m_videoPlayer->m_videoWidget);
+            m_videoPlayer->m_player->setAudioOutput(m_videoPlayer->m_audioOutput);
             m_videoPlayer->m_videoWidget->show();
-            m_videoPlayer->m_audioOutput->setVolume(50);
 
             m_videoPlayer->m_player->play();
+            m_videoPlayer->m_audioOutput->setMuted(false);
+            m_videoPlayer->m_audioOutput->setVolume(50);
         }
         else
         {
