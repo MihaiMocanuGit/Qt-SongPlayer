@@ -27,6 +27,6 @@ public:
     std::string toString() const;
     static std::vector<std::string> getBackSongAttributes(const std::string &songToString);
 
-    bool operator==(const Song& right);
+    bool operator==(const Song& right) const;
 
 };

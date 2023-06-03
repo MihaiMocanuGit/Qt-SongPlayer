@@ -74,8 +74,11 @@ void FileRepository::load(const std::string &filepath)
         }
         catch (std::exception &exp)
         {
-            std::cerr << exp.what();
-            inputFile.close();
+            if (not inputFile.eof())
+            {
+                std::cerr << exp.what();
+                inputFile.close();
+            }
         }
 
     }

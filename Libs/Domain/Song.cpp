@@ -60,7 +60,7 @@ std::vector<std::string> Song::getBackSongAttributes(const std::string &songToSt
 }
 
 
-bool Song::operator==(const Song &right)
+bool Song::operator==(const Song &right) const
 {
     return this->m_title == right.m_title and this->m_artist == right.m_artist;
 }

@@ -84,6 +84,7 @@ void SongController::generateRandomPlaylist(int noSongs)
     Playlist temp;
     temp.generateRandom(m_ref_repository.getSongs(), noSongs);
 
+    m_playlist.clear();
     for (const auto& songMapElement : temp.getSongs())
     {
         m_playlist.store(songMapElement.second);
