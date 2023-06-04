@@ -22,7 +22,7 @@ int main(int argc, char *argv[])
         repo.store(song);
     }
 
-    repo.store(Song("Never Gonna Give You Up ", "Rick Astley", "never_gonna.mp4", "We’re no strangers to love\n"
+    repo.store(Song("SuperSecretSong", "Put in playlist and play", "secret.mp4", "We’re no strangers to love\n"
                                                                                         "You know the rules and so do I\n"
                                                                                         "A full commitment’s what I’m thinking of\n"
                                                                                         "You wouldn’t get this from any other guy\n"
