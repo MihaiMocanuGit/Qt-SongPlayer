@@ -51,6 +51,7 @@ public:
     void undo();
     void redo();
 
+    //this should've been a private function called inside add and remove instead, my mistake
     void clearRedoStack();
 
 };
